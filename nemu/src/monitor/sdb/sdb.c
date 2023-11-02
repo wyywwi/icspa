@@ -63,6 +63,18 @@ static int cmd_step(char *args){
   cpu_exec(step);
   return 0;
 }
+
+static int cmd_info(char *args){
+  if(*args == 'r'){
+    isa_reg_display();
+  }
+  if(*args == 'w'){
+
+  }
+  return 0;
+}
+
+
 static struct {
   const char *name;
   const char *description;
@@ -72,6 +84,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "run for some steps", cmd_step},
+  { "info", "prinf info for regs or watchpoints", cmd_info},
   /* TODO: Add more commands */
 
 };
