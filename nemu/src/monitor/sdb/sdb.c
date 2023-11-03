@@ -80,6 +80,9 @@ static int cmd_info(char *args){
 
 static int cmd_x(char *args){
   int nlen = 1;
+  if(args == NULL){
+    return 0;
+  }
   vaddr_t address_to_access;
   sscanf(args,"%d%x",&nlen,&address_to_access);
   word_t now_access;
