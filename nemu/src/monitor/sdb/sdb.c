@@ -79,17 +79,18 @@ static int cmd_x(char *args){
   int nlen = 1;
   vaddr_t address_to_access;
   sscanf(args,"%d%x",&nlen,&address_to_access);
-  word_t now_access,next_access;
-  for(int i = 0 ; i < nlen/2 ; i++){
-    printf("%08x: ",address_to_access + i * 8 );
-    now_access = paddr_read(address_to_access + i * 8 , 4 );
-    next_access = paddr_read(address_to_access + i * 8 + 4 , 4);
-    printf("%08x %08x\n",now_access,next_access);
-  }
-  if(nlen%2){
-    printf("%08x: ",address_to_access + (nlen - 1) * 4);
-    now_access = paddr_read(address_to_access + (nlen - 1) * 4 , 4);
-    printf("%08x\n",now_access);
+  word_t now_access;
+  for(int i = 0 ; i < nlen/4 ; i++){
+    printf("0x%08x: ",address_to_access + i * 8 );
+    for(int j = 0 ; j < 4 ; j++){
+      if( i * 4 + j == nlen - 1){
+        printf("\n");
+        return 0;
+      }
+      now_access = paddr_read(address_to_access + (i * 4 + j ) * 2 , 2);
+      printf("%04x " , now_access);
+    }
+    printf("\n");
   }
   return 0;
 }
