@@ -74,6 +74,10 @@ static int cmd_info(char *args){
   return 0;
 }
 
+static int cmd_x(char *args){
+  printf("%s",args);
+  return 0;
+}
 
 static struct {
   const char *name;
@@ -85,6 +89,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "run for some steps", cmd_step},
   { "info", "prinf info for regs or watchpoints", cmd_info},
+  { "x", "examine the address" , cmd_x}
   /* TODO: Add more commands */
 
 };
