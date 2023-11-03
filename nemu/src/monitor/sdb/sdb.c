@@ -80,12 +80,12 @@ static int cmd_x(char *args){
   vaddr_t address_to_access;
   sscanf(args,"%d%x",&nlen,&address_to_access);
   word_t now_access;
-  for(int i = 0 ; i < nlen/8 + 1; i++){
-    printf("0x%08x: ",address_to_access + i * 8 );
-    for(int j = 0 ; j < 8 ; j++){
-      if( i * 8 + j == nlen)break;
-      now_access = paddr_read(address_to_access + (i * 8 + j )  , 1);
-      printf("%02x " , now_access);
+  for(int i = 0 ; i < nlen/4 + 1; i++){
+    printf("0x%08x: ",address_to_access + i * 4 );
+    for(int j = 0 ; j < 4 ; j++){
+      if( i * 4 + j == nlen)break;
+      now_access = paddr_read(address_to_access + (i * 4 + j ) * 2 , 2);
+      printf("%04x " , now_access);
     }
     printf("\n");
   }
