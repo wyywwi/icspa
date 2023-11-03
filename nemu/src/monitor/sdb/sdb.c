@@ -66,6 +66,9 @@ static int cmd_step(char *args){
 }
 
 static int cmd_info(char *args){
+  if(args == NULL){
+    return 0;
+  }
   if(*args == 'r'){
     isa_reg_display();
   }
