@@ -88,10 +88,11 @@ static int cmd_x(char *args){
   word_t now_access;
   int count = nlen/4 + (nlen%4 != 0);
   for(int i = 0 ; i < count; i++){
+    int access_place[4] = {1,0,3,2};
     printf("0x%08x: ",address_to_access + i * 4 );
     for(int j = 0 ; j < 4 ; j++){
       if( i * 4 + j == nlen)break;
-      now_access = paddr_read(address_to_access + (i * 4 + j ) * 2 , 2);
+      now_access = paddr_read(address_to_access + (i * 4 + access_place[j] ) * 2 , 2);
       printf("%04x " , now_access);
     }
     printf("\n");
