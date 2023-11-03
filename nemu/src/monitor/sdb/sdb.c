@@ -17,6 +17,7 @@
 #include <cpu/cpu.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <memory/paddr.h>
 #include "sdb.h"
 
 static int is_batch_mode = false;
@@ -75,7 +76,21 @@ static int cmd_info(char *args){
 }
 
 static int cmd_x(char *args){
-  printf("%s",args);
+  int nlen = 1;
+  vaddr_t address_to_access;
+  sscanf(args,"%d%x",&nlen,&address_to_access);
+  word_t now_access,next_access;
+  for(int i = 0 ; i < nlen/2 ; i++){
+    printf("%08x: ",address_to_access + i * 8 );
+    now_access = paddr_read(address_to_access + i * 8 , 4 );
+    next_access = paddr_read(address_to_access + i * 8 + 4 , 4);
+    printf("%08x %08x\n",now_access,next_access);
+  }
+  if(nlen%2){
+    printf("%08x: ",address_to_access + (nlen - 1) * 4);
+    now_access = paddr_read(address_to_access + (nlen - 1) * 4 , 4);
+    printf("%08x\n",now_access);
+  }
   return 0;
 }
 
@@ -89,7 +104,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "run for some steps", cmd_step},
   { "info", "prinf info for regs or watchpoints", cmd_info},
-  { "x", "examine the address" , cmd_x}
+  { "x", "examine the address" , cmd_x},
   /* TODO: Add more commands */
 
 };
