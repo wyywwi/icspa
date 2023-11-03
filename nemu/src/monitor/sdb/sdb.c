@@ -83,7 +83,7 @@ static int cmd_x(char *args){
   for(int i = 0 ; i < nlen/4 + 1; i++){
     printf("0x%08x: ",address_to_access + i * 8 );
     for(int j = 0 ; j < 4 ; j++){
-      if( i * 4 + j == nlen - 1)break;
+      if( i * 4 + j == nlen)break;
       now_access = paddr_read(address_to_access + (i * 4 + j ) * 2 , 2);
       printf("%04x " , now_access);
     }
