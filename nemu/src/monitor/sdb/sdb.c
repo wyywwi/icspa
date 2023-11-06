@@ -102,7 +102,8 @@ static int cmd_x(char *args){
 
 static int cmd_t(char *args){
   bool su = 0;
-  expr(args,&su);
+  int number = expr(args,&su);
+  if(su)printf("%d",number);
   return 0;
 }
 
