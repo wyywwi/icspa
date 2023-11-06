@@ -38,14 +38,14 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-  {"*", TK_STAR},
-  {"-", TK_SUB},
+  {"[*]", TK_STAR},
+  {"[-]", TK_SUB},
   {" ", TK_NOTYPE},    // spaces
-  {"+", TK_PLUS},         // plus
+  {"[+]", TK_PLUS},         // plus
   {"==", TK_EQ}, // equal
-  {"/", TK_DIV},
-  {"(", TK_LP},
-  {")", TK_RP},
+  {"[/]", TK_DIV},
+  {"[(]", TK_LP},
+  {"[)]", TK_RP},
   {"0|[1-9][0-9]*", TK_NUM}
 };
 
