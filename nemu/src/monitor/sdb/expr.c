@@ -122,18 +122,42 @@ static bool make_token(char *e) {
   return true;
 }
 
+word_t eval(int p,int q){
+  if(p < q || q - p == 1 || tokens[p].type != TK_NUM){
+    panic("Bad Expression");
+  }
+  else if(p == q){
+    word_t number;
+    sscanf(tokens[p].str,"%d",&number);
+    return number;
+  }
+  else if(tokens[p].type == TK_LP && tokens[q].type == TK_RP){
+    return eval(p+1,q-1);
+  }
+  else {
+    switch(tokens[p+1].type){
+      case TK_PLUS:
+        return eval(p,p) + eval(p+2,q);
+      case TK_SUB:
+        return eval(p,p) - eval(p+2,q);
+      case TK_STAR:
+        return eval(p,p) * eval(p+2,q);
+      case TK_DIV:
+        return eval(p,p) / eval(p+2,q);
+    }
+  }
+  return 0;
+}
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
   }
-  make_token(e);
+  *success = make_token(e);
   /* TODO: Insert codes to evaluate the expression. */
-  for(int i = 0 ; i < nr_token ; i++){
-    Log("%d,%s\n",tokens[i].type,tokens[i].str);
-  }
+  
   //TODO();
 
-  return 0;
+  return eval(0,nr_token - 1);
 }
