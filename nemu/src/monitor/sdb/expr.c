@@ -107,6 +107,7 @@ static bool make_token(char *e) {
           default:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start,substr_len);
+            nr_token ++;
         }
 
         break;
@@ -123,7 +124,7 @@ static bool make_token(char *e) {
 }
 
 word_t eval(int p,int q){
-  if(p < q || q - p == 1 || tokens[p].type != TK_NUM){
+  if(p > q || q - p == 1 || tokens[p].type != TK_NUM){
     panic("Bad Expression");
   }
   else if(p == q){
