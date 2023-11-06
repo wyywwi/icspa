@@ -100,6 +100,12 @@ static int cmd_x(char *args){
   return 0;
 }
 
+static int cmd_t(char *args){
+  bool su = 0;
+  expr(args,&su);
+  return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -111,6 +117,7 @@ static struct {
   { "si", "run for some steps", cmd_step},
   { "info", "prinf info for regs or watchpoints", cmd_info},
   { "x", "examine the address" , cmd_x},
+  { "t", "test for exprision" , cmd_t},
   /* TODO: Add more commands */
 
 };
