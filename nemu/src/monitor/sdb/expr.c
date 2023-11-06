@@ -102,6 +102,8 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
         switch (rules[i].token_type) {
+          case TK_NOTYPE:
+            continue;
           default:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start,substr_len);
@@ -131,7 +133,7 @@ word_t expr(char *e, bool *success) {
   for(int i = 0 ; i < nr_token ; i++){
     printf("%d,%s\n",tokens[i].type,tokens[i].str);
   }
-  TODO();
+  //TODO();
 
   return 0;
 }
