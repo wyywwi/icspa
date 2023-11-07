@@ -140,11 +140,11 @@ word_t eval(int p,int q){
       case TK_PLUS:
         return eval(p,q-2) + eval(q,q);
       case TK_SUB:
-        return eval(p,q-2) + eval(q,q);
+        return eval(p,q-2) - eval(q,q);
       case TK_STAR:
-        return eval(p,q-2) + eval(q,q);
+        return eval(p,q-2) * eval(q,q);
       case TK_DIV:
-        return eval(p,q-2) + eval(q,q);
+        return eval(p,q-2) / eval(q,q);
     }
   }
   return 0;
