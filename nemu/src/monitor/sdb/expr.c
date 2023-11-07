@@ -124,7 +124,7 @@ static bool make_token(char *e) {
 }
 
 word_t eval(int p,int q){
-  if(p > q || q - p == 1 || tokens[p].type != TK_NUM){
+  if(p > q || q - p == 1){
     panic("Bad Expression");
   }
   else if(p == q){
