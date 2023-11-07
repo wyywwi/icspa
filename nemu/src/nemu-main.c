@@ -32,8 +32,8 @@ int main(int argc, char *argv[]) {
   if(argc > 1){
     sscanf(argv[0],"%d",&loop);
   }
-  FILE* is_open = freopen("tools/gen-expr/input","r",stdin);
-  if(!is_open)panic("error for open");
+  FILE* is_open = freopen("/home/kkoapbd/Desktop/ics2023/nemu/tools/gen-expr/input","r",stdin);
+  if(is_open == NULL)panic("error for open");
   for(int i = 0;i<loop;i++){
     uint32_t n;
     char buf[65536];
