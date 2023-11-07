@@ -123,6 +123,19 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parentheses(int p,int q){
+  if(tokens[p].type != TK_LP && tokens[q].type != TK_RP)return false;
+  else{
+    int count = 0;
+    for(int i = p ; i <= q ; i++){
+      if(tokens[i].type == TK_LP)count++;
+      else if(tokens[i].type == TK_RP)count--;
+      if(count == 0 && i!= q)return false;
+    }
+  }
+  return true;
+}
+
 word_t eval(int p,int q){
   if(p > q || q - p == 1){
     panic("Bad Expression");
@@ -132,19 +145,46 @@ word_t eval(int p,int q){
     sscanf(tokens[p].str,"%d",&number);
     return number;
   }
-  else if(tokens[p].type == TK_LP && tokens[q].type == TK_RP){
+  else if(check_parentheses(p,q)){
     return eval(p+1,q-1);
   }
   else {
-    switch(tokens[q-1].type){
-      case TK_PLUS:
-        return eval(p,q-2) + eval(q,q);
-      case TK_SUB:
-        return eval(p,q-2) - eval(q,q);
-      case TK_STAR:
-        return eval(p,q-2) * eval(q,q);
-      case TK_DIV:
-        return eval(p,q-2) / eval(q,q);
+    //int LP_place = p - 1,RP_place = p - 1,
+    int mul_and_div = p - 1,plus_and_sub = p - 1;
+    for(int i = q ; i >= p ; i--){
+      // if(tokens[i].type == TK_RP && RP_place != p - 1){
+      //   RP_place = i;
+      //   for(int j = i - 1 ; j >= p ; j--){
+      //     if(check_parentheses(j,i)){
+      //       LP_place = j;
+      //       break;
+      //     }
+      //   }
+      //   break;
+      // }
+      if((tokens[i].type == TK_STAR || tokens[i].type == TK_DIV) && mul_and_div != p - 1){
+        mul_and_div = i;
+        break;
+      }
+      if((tokens[i].type == TK_PLUS || tokens[i].type == TK_SUB) && plus_and_sub != p - 1){
+        plus_and_sub = i;
+      }
+    }
+    if(mul_and_div != p - 1){
+      if(tokens[mul_and_div].type == TK_STAR){
+        return eval(p,mul_and_div - 1) * eval(mul_and_div + 1,q);
+      }
+      else if(tokens[mul_and_div].type == TK_DIV){
+        return eval(p,mul_and_div - 1) * eval(mul_and_div + 1,q);
+      }
+    }
+    else if(plus_and_sub != p - 1){
+      if(tokens[plus_and_sub].type == TK_PLUS){
+        return eval(p,plus_and_sub - 1) + eval(plus_and_sub + 1,q);
+      }
+      else if(tokens[plus_and_sub].type == TK_SUB){
+        return eval(p,plus_and_sub - 1) - eval(plus_and_sub + 1,q);
+      }
     }
   }
   return 0;
