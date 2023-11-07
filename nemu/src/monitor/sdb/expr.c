@@ -136,15 +136,15 @@ word_t eval(int p,int q){
     return eval(p+1,q-1);
   }
   else {
-    switch(tokens[p+1].type){
+    switch(tokens[q-1].type){
       case TK_PLUS:
-        return eval(p,p) + eval(p+2,q);
+        return eval(p,q-2) + eval(q,q);
       case TK_SUB:
-        return eval(p,p) - eval(p+2,q);
+        return eval(p,q-2) + eval(q,q);
       case TK_STAR:
-        return eval(p,p) * eval(p+2,q);
+        return eval(p,q-2) + eval(q,q);
       case TK_DIV:
-        return eval(p,p) / eval(p+2,q);
+        return eval(p,q-2) + eval(q,q);
     }
   }
   return 0;
