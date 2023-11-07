@@ -145,7 +145,7 @@ word_t eval(int p,int q){
     sscanf(tokens[p].str,"%d",&number);
     return number;
   }
-  else if(tokens[p].type != TK_LP && tokens[q].type != TK_RP && check_parentheses(p,q)){
+  else if(tokens[p].type == TK_LP && tokens[q].type == TK_RP && check_parentheses(p,q)){
     return eval(p+1,q-1);
   }
   else {
