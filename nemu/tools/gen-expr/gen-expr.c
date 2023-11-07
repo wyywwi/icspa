@@ -30,9 +30,73 @@ static char *code_format =
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
+static int place = 0;
 
-static void gen_rand_expr() {
-  buf[0] = '\0';
+static int countDigits(int num) {
+    // 处理0的情况
+    if (num == 0) {
+        return 1;
+    }
+
+    // 将整数转换为绝对值
+    int absNum = abs(num);
+
+    // 初始化计数器
+    int count = 0;
+
+    // 计算位数
+    while (absNum != 0) {
+        absNum /= 10;
+        count++;
+    }
+    return count;
+}
+
+static unsigned int gen_rand_expr() {
+  if(place > 60000){
+    buf[place++] = '1';
+    return 1;
+  }
+  unsigned int n = 0,a=0,b=0;
+  switch(rand()%3){
+  	case 0:
+  		n = rand()%65536;
+  	  int n_len = countDigits(n);
+      snprintf(buf + place,n_len,"%d",n);
+      place += n_len - 1;
+      break;
+  	case 1:
+      buf[place++] = '(';
+      n = gen_rand_expr();
+      buf[place++] = ')';
+      break;
+  	case 2:
+      int choose = random();
+      a = gen_rand_expr();
+      int now_place = place;
+      place++;
+      b = gen_rand_expr();
+      if(b == 0)
+      {
+        switch(choose%4)
+        {
+          case 0:buf[now_place] = '+';n = a + b;break;
+          case 1:buf[now_place] = '-';n = a - b;break;
+          case 2:buf[now_place] = '*';n = a * b;break;
+          case 3:buf[now_place] = '/';n = a / b;break;
+        } 
+      }
+      else{
+        switch(choose%3)
+        {
+          case 0:buf[now_place] = '+';n = a + b;break;
+          case 1:buf[now_place] = '-';n = a - b;break;
+          case 2:buf[now_place] = '*';n = a * b;break;
+        }
+      }
+      break;
+  }
+  return n;
 }
 
 int main(int argc, char *argv[]) {
@@ -44,7 +108,9 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    place = 0;
     gen_rand_expr();
+    buf[place] = '\0';
 
     sprintf(code_buf, code_format, buf);
 
