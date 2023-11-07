@@ -123,18 +123,18 @@ static bool make_token(char *e) {
   return true;
 }
 
-// static int check_parentheses(int p,int q){
-//   if(tokens[p].type != TK_LP || tokens[q].type != TK_RP)return false;
-//   else{
-//     int count = 0;
-//     for(int i = p ; i <= q ; i++){
-//       if(tokens[i].type == TK_LP)count++;
-//       else if(tokens[i].type == TK_RP)count--;
-//       if(count == 0 && i!= q)return 0;
-//     }
-//   }
-//   return 1;
-// }
+static inline bool check_parentheses(int p,int q){
+  if(tokens[p].type != TK_LP || tokens[q].type != TK_RP)return false;
+  else{
+    int count = 0;
+    for(int i = p ; i <= q ; i++){
+      if(tokens[i].type == TK_LP)count++;
+      else if(tokens[i].type == TK_RP)count--;
+      if(count == 0 && i!= q)return false;
+    }
+  }
+  return true;
+}
 
 word_t eval(int p,int q){
   if(p > q || q - p == 1){

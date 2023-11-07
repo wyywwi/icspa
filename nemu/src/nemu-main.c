@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     char buf[65536];
     int is_sca = scanf("%d %s",&n,buf);
     if(!is_sca)break;
-    int result = expr(buf);
+    uint32_t result = expr(buf);
     if(result != n)panic("Error at %s and result is %d but need to be %d\n",buf,result,n);
   }
   /* Start engine. */
