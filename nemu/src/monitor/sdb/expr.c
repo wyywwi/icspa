@@ -123,7 +123,7 @@ static bool make_token(char *e) {
   return true;
 }
 
-static bool check_parentheses(int p,int q){
+static inline bool check_parentheses(int p,int q){
   if(tokens[p].type != TK_LP || tokens[q].type != TK_RP)return false;
   else{
     int count = 0;
