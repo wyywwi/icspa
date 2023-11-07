@@ -124,15 +124,15 @@ static bool make_token(char *e) {
 }
 
 static inline bool check_parentheses(int p,int q){
-  if(tokens[p].type != TK_LP || tokens[q].type != TK_RP)return false;
-  else{
+  //if(tokens[p].type != TK_LP || tokens[q].type != TK_RP)return false;
+ // else{
     int count = 0;
     for(int i = p ; i <= q ; i++){
       if(tokens[i].type == TK_LP)count++;
       else if(tokens[i].type == TK_RP)count--;
       if(count == 0 && i!= q)return false;
     }
-  }
+  //}
   return true;
 }
 
