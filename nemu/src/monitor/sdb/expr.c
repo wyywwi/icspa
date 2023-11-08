@@ -145,9 +145,9 @@ word_t eval(int p,int q){
     sscanf(tokens[p].str,"%d",&number);
     return number;
   }
-  // else if(tokens[p].type == TK_LP && tokens[q].type == TK_RP){
-  //   return eval(p+1,q-1);
-  // }
+  else if(tokens[p].type == TK_LP && tokens[q].type == TK_RP){
+    return eval(p+1,q-1);
+  }
   else {
     //int LP_place = p - 1,RP_place = p - 1,
     //if(check_parentheses(p,q))return eval(p+1,q-1);
