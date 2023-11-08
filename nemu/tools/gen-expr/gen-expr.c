@@ -62,7 +62,7 @@ static unsigned int gen_rand_expr() {
   	case 0:
   		n = rand()%INT32_MAX;
   	  int n_len = countDigits(n);
-      snprintf(buf + place,n_len,"%u",n);
+      sprintf(buf + place,"%u",n);
       place += n_len - 1;
       break;
   	case 1:
