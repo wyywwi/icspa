@@ -149,30 +149,36 @@ word_t eval(int p,int q){
     return eval(p+1,q-1);
   }
   else {
-    int mul_and_div = p - 1,plus_and_sub = p - 1;
+    int op = p-1,op_type = TK_DIV;
+    int count = 0;
     for(int i = p ; i <= q ; i++){
-      if((tokens[i].type == TK_STAR || tokens[i].type == TK_DIV)){
-        mul_and_div = i;
-      }
-      if((tokens[i].type == TK_PLUS || tokens[i].type == TK_SUB)){
-        plus_and_sub = i;
-      }
-    }
-    if(plus_and_sub != p - 1){
-      if(tokens[plus_and_sub].type == TK_PLUS){
-        return eval(p,plus_and_sub - 1) + eval(plus_and_sub + 1,q);
-      }
-      else if(tokens[plus_and_sub].type == TK_SUB){
-        return eval(p,plus_and_sub - 1) - eval(plus_and_sub + 1,q);
+      if(tokens[i].type == TK_LP)count++;
+      else if(tokens[i].type == TK_RP)count--;
+      else if(count == 0){
+        if(tokens[i].type == TK_PLUS || tokens[i].type == TK_SUB){
+          op = i;
+          op_type = tokens[i].type;
+        }
+        if(op_type != TK_PLUS && op_type != TK_SUB && ( tokens[i].type == TK_STAR || tokens[i].type == TK_DIV )){
+          op = i;
+          op_type = tokens[i].type;
+        }
       }
     }
-    else if(mul_and_div != p - 1){
-      if(tokens[mul_and_div].type == TK_STAR){
-        return eval(p,mul_and_div - 1) * eval(mul_and_div + 1,q);
-      }
-      else if(tokens[mul_and_div].type == TK_DIV){
-        return eval(p,mul_and_div - 1) * eval(mul_and_div + 1,q);
-      }
+    uint32_t val1 = eval(p,op-1);
+    uint32_t val2 = eval(op+1,q);
+    switch (tokens[op].type)
+    {
+    case TK_PLUS:
+      return val1 + val2;
+    case TK_SUB:
+      return val1 - val2;
+    case TK_DIV:
+      return val1 / val2;
+    case TK_STAR:
+      return val1 * val2;
+    default:
+      assert(0);
     }
   }
   return 0;
