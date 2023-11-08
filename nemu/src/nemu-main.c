@@ -28,21 +28,21 @@ int main(int argc, char *argv[]) {
 #else
   init_monitor(argc, argv);
 #endif
-  // int loop = 1000;
-  // if(argc > 1){
-  //   sscanf(argv[0],"%d",&loop);
-  // }
-  // FILE* is_open = freopen("/home/kkoapbd/Desktop/ics2023/nemu/tools/gen-expr/input","r",stdin);
-  // if(is_open == NULL)panic("error for open");
-  // for(int i = 0;i<loop;i++){
-  //   uint32_t n;
-  //   bool success;
-  //   char buf[65536];
-  //   int is_sca = scanf("%d %s",&n,buf);
-  //   if(!is_sca)break;
-  //   uint32_t result = expr(buf,&success);
-  //   if(result != n)panic("Error at %s and result is %d but need to be %d\n",buf,result,n);
-  // }
+  int loop = 1000;
+  if(argc > 1){
+    sscanf(argv[1],"%d",&loop);
+  }
+  FILE* is_open = freopen("/home/kkoapbd/Desktop/ics2023/nemu/tools/gen-expr/input","r",stdin);
+  if(is_open == NULL)panic("error for open");
+  for(int i = 0;i<loop;i++){
+    uint32_t n;
+    bool success;
+    char buf[65536];
+    int is_sca = scanf("%d %s",&n,buf);
+    if(!is_sca)break;
+    uint32_t result = expr(buf,&success);
+    if(result != n)panic("Error at %s and result is %d but need to be %d\n",buf,result,n);
+  }
   /* Start engine. */
   engine_start();
 
