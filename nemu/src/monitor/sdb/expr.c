@@ -150,12 +150,11 @@ word_t eval(int p,int q){
   }
   else {
     int mul_and_div = p - 1,plus_and_sub = p - 1;
-    for(int i = q ; i >= p ; i--){
-      if((tokens[i].type == TK_STAR || tokens[i].type == TK_DIV) && mul_and_div != p - 1){
+    for(int i = p ; i >= q ; i++){
+      if((tokens[i].type == TK_STAR || tokens[i].type == TK_DIV)){
         mul_and_div = i;
-        break;
       }
-      if((tokens[i].type == TK_PLUS || tokens[i].type == TK_SUB) && plus_and_sub != p - 1){
+      if((tokens[i].type == TK_PLUS || tokens[i].type == TK_SUB)){
         plus_and_sub = i;
       }
     }
