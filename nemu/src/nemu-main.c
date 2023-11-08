@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     uint32_t n;
     bool success;
     char buf[65536];
-    int is_sca = scanf("%d %s",&n,buf);
+    int is_sca = scanf("%d%s",&n,buf);
     if(!is_sca)break;
     uint32_t result = expr(buf,&success);
     if(result != n)panic("Error at %s and result is %d but need to be %d\n",buf,result,n);

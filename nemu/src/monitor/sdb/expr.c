@@ -145,11 +145,12 @@ word_t eval(int p,int q){
     sscanf(tokens[p].str,"%d",&number);
     return number;
   }
-  else if(tokens[p].type == TK_LP && tokens[q].type == TK_RP){
-    return eval(p+1,q-1);
-  }
+  // else if(tokens[p].type == TK_LP && tokens[q].type == TK_RP){
+  //   return eval(p+1,q-1);
+  // }
   else {
     //int LP_place = p - 1,RP_place = p - 1,
+    if(check_parentheses(p,q))return eval(p+1,q-1);
     int mul_and_div = p - 1,plus_and_sub = p - 1;
     for(int i = q ; i >= p ; i--){
       // if(tokens[i].type == TK_RP && RP_place != p - 1){
