@@ -57,10 +57,10 @@ static unsigned int gen_rand_expr() {
     buf[place++] = '1';
     return 1;
   }
-  unsigned int n = 0,a=0,b=0;
+  uint32_t n = 0,a=0,b=0;
   switch(rand()%3){
   	case 0:
-  		n = rand()%65536;
+  		n = rand()%INT32_MAX;
   	  int n_len = countDigits(n);
       snprintf(buf + place,n_len,"%d",n);
       place += n_len - 1;
