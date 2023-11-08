@@ -158,20 +158,20 @@ word_t eval(int p,int q){
         plus_and_sub = i;
       }
     }
-    if(mul_and_div != p - 1){
-      if(tokens[mul_and_div].type == TK_STAR){
-        return eval(p,mul_and_div - 1) * eval(mul_and_div + 1,q);
-      }
-      else if(tokens[mul_and_div].type == TK_DIV){
-        return eval(p,mul_and_div - 1) * eval(mul_and_div + 1,q);
-      }
-    }
-    else if(plus_and_sub != p - 1){
+    if(plus_and_sub != p - 1){
       if(tokens[plus_and_sub].type == TK_PLUS){
         return eval(p,plus_and_sub - 1) + eval(plus_and_sub + 1,q);
       }
       else if(tokens[plus_and_sub].type == TK_SUB){
         return eval(p,plus_and_sub - 1) - eval(plus_and_sub + 1,q);
+      }
+    }
+    else if(mul_and_div != p - 1){
+      if(tokens[mul_and_div].type == TK_STAR){
+        return eval(p,mul_and_div - 1) * eval(mul_and_div + 1,q);
+      }
+      else if(tokens[mul_and_div].type == TK_DIV){
+        return eval(p,mul_and_div - 1) * eval(mul_and_div + 1,q);
       }
     }
   }
