@@ -138,7 +138,7 @@ static inline bool check_parentheses(int p,int q){
 }
 
 word_t eval(int p,int q){
-  if(p > q || q - p == 1){
+  if(p > q){
     panic("Bad Expression");
   }
   else if(p == q){
