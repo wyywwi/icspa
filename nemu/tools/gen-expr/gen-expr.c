@@ -52,7 +52,7 @@ static int countDigits(uint32_t num) {
 }
 
 static unsigned int gen_rand_expr() {
-  if(place > 60000){
+  if(place > 50000){
     buf[place++] = '1';
     return 1;
   }

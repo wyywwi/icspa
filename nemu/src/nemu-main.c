@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 #else
   init_monitor(argc, argv);
 #endif
-  int loop = 1000;
+  int loop = 9314;
   if(argc > 1){
     sscanf(argv[1],"%d",&loop);
   }
