@@ -32,20 +32,19 @@ static char *code_format =
 "}";
 static int place = 0;
 
-static int countDigits(int num) {
+static int countDigits(uint32_t num) {
     // 处理0的情况
     if (num == 0) {
         return 1;
     }
 
     // 将整数转换为绝对值
-    int absNum = abs(num);
 
     // 初始化计数器
     int count = 0;
 
     // 计算位数
-    while (absNum != 0) {
+    while (num != 0) {
         absNum /= 10;
         count++;
     }
@@ -62,8 +61,8 @@ static unsigned int gen_rand_expr() {
   	case 0:
   		n = rand()%INT32_MAX;
   	  int n_len = countDigits(n);
-      sprintf(buf + place,"%u",n);
-      place += n_len - 1;
+      snprintf(buf + place,n_len+1,"%u",n);
+      place += n_len;
       break;
   	case 1:
       buf[place++] = '(';
