@@ -1,4 +1,4 @@
-STUID = U202112014
+STUID = 202112014
 STUNAME = 张飞扬
 
 # DO NOT modify the following code!!!
