@@ -51,8 +51,8 @@ static struct rule {
   {"[/]", TK_DIV},
   {"[(]", TK_LP},
   {"[)]", TK_RP},
-  //{"[$][0-9a-zA-Z][0-9a-zA-Z]",TK_REG},
-  //{"(0x|0X)[0-9a-fA-F]+",TK_HEX},
+  {"[$][0-9a-zA-Z][0-9a-zA-Z]",TK_REG},
+  {"(0x|0X)[0-9a-fA-F]+",TK_HEX},
   {"0|[1-9][0-9]*", TK_NUM}
 };
 
@@ -266,10 +266,10 @@ word_t expr(char *e, bool *success) {
     {
       if(i == 0 || (tokens[i-1].type != TK_NUM && tokens[i-1].type != TK_REG && tokens[i-1].type != TK_HEX && tokens[i-1].type != TK_RP)){
         if(tokens[i].type == TK_SUB){
-          //tokens[i].type = TK_NEG;
+          tokens[i].type = TK_NEG;
         }
         else{
-          //tokens[i].type = TK_REF;
+          tokens[i].type = TK_REF;
         }
       }
     }
