@@ -190,7 +190,7 @@ word_t eval(int p,int q){
   else if(p == q){
     if(tokens[p].type == TK_NUM){
       word_t number;
-      sscanf(tokens[p].str,"%d",&number);
+      sscanf(tokens[p].str,"%u",&number);
       return number;
     }
     else if(tokens[p].type == TK_HEX){
