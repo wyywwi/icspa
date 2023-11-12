@@ -111,6 +111,7 @@ int main(int argc, char *argv[]) {
   int i;
   for (i = 0; i < loop; i ++) {
     place = 0;
+    num_token = 0;
     gen_rand_expr();
     buf[place] = '\0';
 
