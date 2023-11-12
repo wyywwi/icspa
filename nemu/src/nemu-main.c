@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     int is_sca = fscanf(is_open,"%u%s",&n,buf);
     if(!is_sca)break;
     uint32_t result = expr(buf,&success);
-    if(result != n)panic("Error at %s and result is %d but need to be %d\n",buf,result,n);
+    if(result != n)panic("Error at %s and result is %u but need to be %u\n",buf,result,n);
   }
   /* Start engine. */
   engine_start();
