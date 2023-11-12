@@ -110,7 +110,6 @@ bool check_wp_diff(int *n){
       now->last_value = now_value;
       diff = true;
       *n = now -> NO;
-      break;
     }
     now = now->next;
   }
