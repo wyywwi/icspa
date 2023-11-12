@@ -143,7 +143,7 @@ static inline bool check_parentheses(int p,int q){
   return true;
 }
 
-static int get_order(int type){
+static int get_order(int type,int count){
   int order = 0;
   switch (type)
   {
@@ -162,15 +162,11 @@ static int get_order(int type){
   case TK_AND:
     order = 1;
     break;
-  case TK_RP:
-  case TK_LP:
-    order = 6;
-    break;
   default:
     order = 5;
     break;
   }
-  return order;
+  return order + count;
 }
 
 word_t eval(int p,int q){
@@ -214,9 +210,17 @@ word_t eval(int p,int q){
     return eval(p+1,q-1);
   }
   else {
-    int op = p - 1,now_order = 5;
+    int op = p - 1,now_order = 5,count = 0;
     for(int i = p ; i <= q ; i++){
-      int find_order = get_order(tokens[i].type);
+      if(tokens[i].type == TK_LP){
+        count++;
+        continue;
+      }
+      if(tokens[i].type == TK_RP){
+        count--;
+        continue;
+      }
+      int find_order = get_order(tokens[i].type,count);
       if(find_order <= now_order){
         op = i;
         now_order = find_order;
