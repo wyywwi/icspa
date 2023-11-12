@@ -51,7 +51,7 @@ static struct rule {
   {"[/]", TK_DIV},
   {"[(]", TK_LP},
   {"[)]", TK_RP},
-  {"$[0-9a-zA-Z][0-9a-zA-Z]",TK_REG},
+  {"[$][0-9a-zA-Z][0-9a-zA-Z]",TK_REG},
   {"(0x|0X)[0-9a-fA-F]+",TK_HEX},
   {"0|[1-9][0-9]*", TK_NUM}
 };
