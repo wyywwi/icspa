@@ -48,7 +48,7 @@ WP* new_wp(char *exp){
     now->next = free_;
     strcpy(now->next->exp,exp);
     free_ = free_->next;
-    now->next = NULL;
+    now->next->next = NULL;
     return now->next;
   }
 }
