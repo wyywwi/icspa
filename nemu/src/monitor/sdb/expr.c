@@ -51,8 +51,8 @@ static struct rule {
   {"[/]", TK_DIV},
   {"[(]", TK_LP},
   {"[)]", TK_RP},
-  {"[$][0-9a-zA-Z][0-9a-zA-Z]",TK_REG},
-  {"(0x|0X)[0-9a-fA-F]+",TK_HEX},
+  //{"[$][0-9a-zA-Z][0-9a-zA-Z]",TK_REG},
+  //{"(0x|0X)[0-9a-fA-F]+",TK_HEX},
   {"0|[1-9][0-9]*", TK_NUM}
 };
 
@@ -210,7 +210,7 @@ word_t eval(int p,int q){
     return eval(p+1,q-1);
   }
   else {
-    int op = p - 1,now_order = INT32_MAX,count = 0;
+    int op = p - 1,now_order = 65536,count = 0;
     for(int i = p ; i <= q ; i++){
       if(tokens[i].type == TK_LP){
         count++;
