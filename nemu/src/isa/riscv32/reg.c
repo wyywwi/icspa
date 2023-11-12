@@ -38,5 +38,6 @@ word_t isa_reg_str2val(const char *s, bool *success) {
       return cpu.gpr[i];
     }
   }
+  if((s[1] == 'p'||s[1] == 'P') && (s[2] == 'c'||s[2] == 'C'))return cpu.pc;
   return 0;
 }
