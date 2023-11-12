@@ -83,5 +83,17 @@ void print_wp(){
     }
   }
 }
+
+void delete_wp(int N){
+  if(head == NULL)return;
+  WP * now = head;
+  while(now != NULL){
+    if(now->NO == N){
+      free_wp(now);
+      return;
+    }
+    now = now->next;
+  }
+}
 /* TODO: Implement the functionality of watchpoint */
 

@@ -27,6 +27,7 @@ void init_wp_pool();
 WP* new_wp(char *exp);
 void free_wp(WP *wp);
 void print_wp();
+void delete_wp(int N);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -113,6 +114,22 @@ static int cmd_p(char *args){
   return 0;
 }
 
+static int cmd_w(char *exp){
+  WP *watch = new_wp(exp);
+  if(watch != NULL)return 0;
+  else return 1;
+}
+
+static int cmd_d(char *args){
+  if(args == NULL)return 1;
+  else{
+    int N = 33;
+    sscanf(args,"%d",&N);
+    delete_wp(N);
+    return 0;
+  }
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -124,6 +141,8 @@ static struct {
   { "si", "run for some steps", cmd_step},
   { "info", "prinf info for regs or watchpoints", cmd_info},
   { "x", "examine the address" , cmd_x},
+  { "w" ,"make a watchpoint" , cmd_w},
+  { "d" ,"delete a watchpoint" , cmd_d},
   { "p", "print for exprision" , cmd_p},
   /* TODO: Add more commands */
 
