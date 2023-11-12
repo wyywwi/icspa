@@ -57,7 +57,7 @@ static unsigned int gen_rand_expr() {
   uint32_t n = 0,a=0,b=0;
   switch(rand()%3){
   	case 0:
-  		n = rand()%INT32_MAX;
+  		n = rand()%65536;
   	  int n_len = countDigits(n);
       snprintf(buf + place,n_len+1,"%u",n);
       place += n_len;
