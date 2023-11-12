@@ -41,7 +41,7 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-  {" ", TK_NOTYPE},
+  //{" ", TK_NOTYPE},
   {"[*]", TK_STAR},
   {"[-]", TK_SUB},
   {"[+]", TK_PLUS},         // plus
