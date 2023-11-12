@@ -41,9 +41,9 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-  {"'*'", TK_STAR},
-  {"'-'", TK_SUB},
-  {"'+'", TK_PLUS},         // plus
+  {"[x]", TK_STAR},
+  {"[-]", TK_SUB},
+  {"[+]", TK_PLUS},         // plus
   {"==", TK_EQ}, // equal
   {"!=",TK_NEQ},
   {"&&",TK_AND},
