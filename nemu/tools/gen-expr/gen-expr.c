@@ -51,14 +51,14 @@ static int countDigits(uint32_t num) {
 
 static int num_token = 0;
 static unsigned int gen_rand_expr() {
-  if(num_token > 20){
+  if(num_token > 2000){
     buf[place++] = '1';
     return 1;
   }
   uint32_t n = 0,a=0,b=0;
   switch(rand()%3){
   	case 0:
-  		n = rand()%30;
+  		n = rand()%INT32_MAX;
   	  int n_len = countDigits(n);
       snprintf(buf + place,n_len+1,"%u",n);
       place += n_len;
