@@ -166,7 +166,7 @@ static int get_order(int type,int count){
     order = 5;
     break;
   }
-  return order + count;
+  return order + count*10;
 }
 
 word_t eval(int p,int q){
