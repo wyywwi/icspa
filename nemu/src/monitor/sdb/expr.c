@@ -171,6 +171,9 @@ static int get_order(int type){
 
 word_t eval(int p,int q){
   if(p > q){
+    for(int i = 0;i<nr_token;i++){
+      printf("%s",tokens[i].str);
+    }
     panic("Bad Expression p = %d,q = %d",p,q);
   }
   else if(q - p == 1){
