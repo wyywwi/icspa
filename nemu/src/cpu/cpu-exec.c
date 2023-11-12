@@ -40,7 +40,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
 #ifdef CONFIG_WATCHPOINT
   int n = -1;
-  if(check_wp_diff(&n)){
+  if(nemu_state.state == NEMU_RUNNING && check_wp_diff(&n)){
     nemu_state.state = NEMU_STOP;
     Log("Stop by watchpoint %d",n);
   }
