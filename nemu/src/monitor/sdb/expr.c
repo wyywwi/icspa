@@ -43,7 +43,6 @@ static struct rule {
    */
   {"[*]", TK_STAR},
   {"[-]", TK_SUB},
-  {" ", TK_NOTYPE},    // spaces
   {"[+]", TK_PLUS},         // plus
   {"==", TK_EQ}, // equal
   {"!=",TK_NEQ},
@@ -53,7 +52,8 @@ static struct rule {
   {"[)]", TK_RP},
   {"[$][0-9a-zA-Z][0-9a-zA-Z]",TK_REG},
   {"(0x|0X)[0-9a-fA-F]+",TK_HEX},
-  {"0|[1-9][0-9]*", TK_NUM}
+  {"0|[1-9][0-9]*", TK_NUM},
+  {" ", TK_NOTYPE},    // spaces
 };
 
 #define NR_REGEX ARRLEN(rules)
