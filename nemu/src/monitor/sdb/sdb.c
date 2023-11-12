@@ -84,7 +84,10 @@ static int cmd_x(char *args){
     return 0;
   }
   vaddr_t address_to_access;
-  sscanf(args,"%d%x",&nlen,&address_to_access);
+  bool su = true;
+  address_to_access = expr(args,&su);
+  if(!su)return -1;
+  //sscanf(args,"%d%x",&nlen,&address_to_access);
   word_t now_access;
   int count = nlen/4 + (nlen%4 != 0);
   for(int i = 0 ; i < count; i++){
@@ -100,7 +103,7 @@ static int cmd_x(char *args){
   return 0;
 }
 
-static int cmd_t(char *args){
+static int cmd_p(char *args){
   bool su = 0;
   int number = expr(args,&su);
   if(su)printf("%d\n",number);
@@ -118,7 +121,7 @@ static struct {
   { "si", "run for some steps", cmd_step},
   { "info", "prinf info for regs or watchpoints", cmd_info},
   { "x", "examine the address" , cmd_x},
-  { "t", "test for exprision" , cmd_t},
+  { "p", "print for exprision" , cmd_p},
   /* TODO: Add more commands */
 
 };
