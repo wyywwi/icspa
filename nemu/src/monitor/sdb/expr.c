@@ -210,7 +210,7 @@ word_t eval(int p,int q){
     return eval(p+1,q-1);
   }
   else {
-    int op = p - 1,now_order = 5,count = 0;
+    int op = p - 1,now_order = INT32_MAX,count = 0;
     for(int i = p ; i <= q ; i++){
       if(tokens[i].type == TK_LP){
         count++;
