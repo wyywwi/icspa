@@ -49,8 +49,9 @@ static int countDigits(uint32_t num) {
     return count;
 }
 
+static int num_token = 0;
 static unsigned int gen_rand_expr() {
-  if(place > 50000){
+  if(num_token > 20){
     buf[place++] = '1';
     return 1;
   }
@@ -61,16 +62,20 @@ static unsigned int gen_rand_expr() {
   	  int n_len = countDigits(n);
       snprintf(buf + place,n_len+1,"%u",n);
       place += n_len;
+      num_token++;
       break;
   	case 1:
       buf[place++] = '(';
+      num_token++;
       n = gen_rand_expr();
       buf[place++] = ')';
+      num_token++;
       break;
   	case 2:
       int choose = random();
       a = gen_rand_expr();
       int now_place = place;
+      num_token++;
       place++;
       b = gen_rand_expr();
       if(b == 0)
