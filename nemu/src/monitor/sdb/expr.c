@@ -208,7 +208,7 @@ word_t eval(int p,int q){
   }
   else {
     int op = p - 1,now_order = 5;
-    for(int i = 0 ; i < nr_token ; i++){
+    for(int i = p ; i <= q ; i++){
       int find_order = get_order(tokens[i].type);
       if(find_order <= now_order){
         op = i;
