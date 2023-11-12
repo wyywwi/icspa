@@ -38,14 +38,12 @@ static int countDigits(uint32_t num) {
         return 1;
     }
 
-    // 将整数转换为绝对值
-
     // 初始化计数器
     int count = 0;
 
     // 计算位数
     while (num != 0) {
-        absNum /= 10;
+        num /= 10;
         count++;
     }
     return count;

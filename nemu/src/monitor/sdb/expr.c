@@ -20,12 +20,15 @@
  */
 #include <regex.h>
 #include <string.h>
+#include <memory/paddr.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ,
   TK_PLUS,TK_SUB,TK_STAR,
   TK_DIV,TK_LP,TK_RP,
-  TK_NUM
+  TK_NUM,TK_HEX,TK_REG,
+  TK_NEQ,TK_REF,TK_AND,
+  TK_NEG,
   /* TODO: Add more token types */
 
 };
@@ -43,9 +46,13 @@ static struct rule {
   {" ", TK_NOTYPE},    // spaces
   {"[+]", TK_PLUS},         // plus
   {"==", TK_EQ}, // equal
+  {"!=",TK_NEQ},
+  {"&&",TK_AND},
   {"[/]", TK_DIV},
   {"[(]", TK_LP},
   {"[)]", TK_RP},
+  {"$[0-9a-zA-Z][0-9a-zA-Z]",TK_REG},
+  {"(0x|0X)[0-9a-fA-F]+",TK_HEX},
   {"0|[1-9][0-9]*", TK_NUM}
 };
 
@@ -100,7 +107,7 @@ static bool make_token(char *e) {
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
-         */
+         */     
         switch (rules[i].token_type) {
           case TK_NOTYPE:
             continue;
@@ -110,7 +117,6 @@ static bool make_token(char *e) {
             tokens[nr_token].str[substr_len] = '\0';
             nr_token ++;
         }
-
         break;
       }
     }
@@ -137,9 +143,46 @@ static inline bool check_parentheses(int p,int q){
   return true;
 }
 
+static int get_order(int type){
+  int order = 0;
+  switch (type)
+  {
+  case TK_STAR:
+  case TK_DIV:
+    order = 4; 
+    break;
+  case TK_PLUS:
+  case TK_SUB:
+    order = 3;
+    break;
+  case TK_EQ:
+  case TK_NEQ:
+    order = 2;
+    break;
+  case TK_AND:
+    order = 1;
+    break;
+  default:
+    order = 5;
+    break;
+  }
+  return order;
+}
+
 word_t eval(int p,int q){
   if(p > q){
     panic("Bad Expression p = %d,q = %d",p,q);
+  }
+  else if(q - p == 1){
+    if(tokens[p].type == TK_REF){
+      word_t addr = eval(q,q);
+      word_t value = paddr_read(addr,4);
+      return value;
+    }
+    if(tokens[p].type == TK_NEG){
+      word_t val = eval(q,q);
+      return (-val);
+    }
   }
   else if(p == q){
     word_t number;
@@ -150,22 +193,15 @@ word_t eval(int p,int q){
     return eval(p+1,q-1);
   }
   else {
-    int op = p-1,op_type = TK_DIV;
-    int count = 0;
-    for(int i = p ; i <= q ; i++){
-      if(tokens[i].type == TK_LP)count++;
-      else if(tokens[i].type == TK_RP)count--;
-      else if(count == 0){
-        if(tokens[i].type == TK_PLUS || tokens[i].type == TK_SUB){
-          op = i;
-          op_type = tokens[i].type;
-        }
-        if(op_type != TK_PLUS && op_type != TK_SUB && ( tokens[i].type == TK_STAR || tokens[i].type == TK_DIV )){
-          op = i;
-          op_type = tokens[i].type;
-        }
+    int op = p - 1,now_order = 5;
+    for(int i = 0 ; i < nr_token ; i++){
+      int find_order = get_order(tokens[i].type);
+      if(find_order <= now_order){
+        op = i;
+        now_order = find_order;
       }
     }
+    if(op == p - 1)assert(0);
     uint32_t val1 = eval(p,op-1);
     uint32_t val2 = eval(op+1,q);
     switch (tokens[op].type)
@@ -178,7 +214,13 @@ word_t eval(int p,int q){
       return val1 / val2;
     case TK_STAR:
       return val1 * val2;
-    default:
+    case TK_EQ:
+      return val1 == val2;
+    case TK_NEQ:
+      return val1 != val2;
+    case TK_AND:
+      return val1 && val2;
+    default:                                                                                                                                                                                                                                                                                                                                                                                     
       assert(0);
     }
   }
@@ -186,13 +228,27 @@ word_t eval(int p,int q){
 }
 
 word_t expr(char *e, bool *success) {
-  // if (!make_token(e)) {
-  //   *success = false;
-  //   return 0;
-  // }
-  *success = make_token(e);
+  if (!make_token(e)) {
+    *success = false;
+    return 0;
+  }
+  *success = true;
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   //*success = true;
+  for(int i = 0; i < nr_token ; i++){
+    if(tokens[i].type == TK_SUB || tokens[i].type == TK_STAR)
+    {
+      if(i == 0 || (tokens[i-1].type != TK_NUM && tokens[i-1].type != TK_REG && tokens[i-1].type != TK_HEX && tokens[i-1].type != TK_RP)){
+        if(tokens[i].type == TK_SUB){
+          tokens[i].type = TK_NEG;
+        }
+        else{
+          tokens[i].type = TK_REF;
+        }
+      }
+    }
+  }
+
   return eval(0,nr_token - 1);
 }

@@ -88,7 +88,7 @@ static int cmd_x(char *args){
   word_t now_access;
   int count = nlen/4 + (nlen%4 != 0);
   for(int i = 0 ; i < count; i++){
-    int access_place[4] = {1,0,3,2};
+    int access_place[4] = {0,1,2,3};
     printf("0x%08x: ",address_to_access + i * 4 );
     for(int j = 0 ; j < 4 ; j++){
       if( i * 4 + j == nlen)break;
