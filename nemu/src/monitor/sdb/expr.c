@@ -185,9 +185,23 @@ word_t eval(int p,int q){
     }
   }
   else if(p == q){
-    word_t number;
-    sscanf(tokens[p].str,"%d",&number);
-    return number;
+    if(tokens[p].type == TK_NUM){
+      word_t number;
+      sscanf(tokens[p].str,"%d",&number);
+      return number;
+    }
+    else if(tokens[p].type == TK_HEX){
+      word_t number;
+      sscanf(tokens[p].str,"%x",&number);
+      return number;
+    }
+    else if(tokens[p].type == TK_REG){
+      word_t number;
+      bool success = true;
+      number = isa_reg_str2val(tokens[p].str,&success);
+      if(!success) return 0;
+      return number;
+    }
   }
   else if(check_parentheses(p,q)){
     return eval(p+1,q-1);
