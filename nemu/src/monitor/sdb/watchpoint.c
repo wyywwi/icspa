@@ -105,7 +105,9 @@ bool check_wp_diff(int *n){
   WP *now = head;
   while(now != NULL){
     bool su = true;
-    if(expr(now->exp,&su) != now->last_value){
+    int now_value = expr(now->exp,&su);
+    if(now_value != now->last_value){
+      now->last_value = now_value;
       diff = true;
       *n = now -> NO;
       break;
