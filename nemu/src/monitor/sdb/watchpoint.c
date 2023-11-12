@@ -99,5 +99,19 @@ void delete_wp(int N){
     now = now->next;
   }
 }
+
+bool check_wp_diff(int *n){
+  bool diff = false;
+  WP *now = head;
+  while(now != NULL){
+    bool su = true;
+    if(expr(now->exp,&su) != now->last_value){
+      diff = true;
+      *n = now -> NO;
+      break;
+    }
+  }
+  return diff;
+}
 /* TODO: Implement the functionality of watchpoint */
 

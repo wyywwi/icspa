@@ -16,6 +16,7 @@
 #include <cpu/cpu.h>
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
+#include "/home/kkoapbd/Desktop/ics2023/nemu/src/monitor/sdb/sdb.h"
 #include <locale.h>
 
 /* The assembly code of instructions executed is only output to the screen
@@ -30,7 +31,6 @@ uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
-bool checkdiff(int *n);
 void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
@@ -40,9 +40,9 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
 #ifdef CONFIG_WATCHPOINT
   int n = -1;
-  if(checkdiff(&n)){
-    cpu.state = NEMU_STOP;
-    printf("Stop by watchpoint %d",n);
+  if(check_wp_diff(&n)){
+    nemu_state.state = NEMU_STOP;
+    Log("Stop by watchpoint %d",n);
   }
 #endif
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));

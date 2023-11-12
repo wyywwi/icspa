@@ -28,5 +28,11 @@ typedef struct watchpoint {
 } WP;
 
 word_t expr(char *e, bool *success);
-
+void init_regex();
+void init_wp_pool();
+WP* new_wp(char *exp);
+void free_wp(WP *wp);
+void print_wp();
+void delete_wp(int N);
+bool check_wp_diff(int *n);
 #endif
