@@ -36,6 +36,8 @@ WP* new_wp(char *exp){
   if(head == NULL){
     head = free_;
     strcpy(head->exp,exp);
+    bool su = true;
+    head->last_value = expr(head->exp,&su);
     free_ = free_->next;
     head->next = NULL;
     return head;
@@ -47,6 +49,8 @@ WP* new_wp(char *exp){
     }
     now->next = free_;
     strcpy(now->next->exp,exp);
+    bool su = true;
+    head->last_value = expr(head->exp,&su);
     free_ = free_->next;
     now->next->next = NULL;
     return now->next;
@@ -78,7 +82,7 @@ void print_wp(){
   else{
     WP *now = head;
     while(now != NULL){
-      printf("%d %s\n",now->NO,now->exp);
+      printf("%d %s %u\n",now->NO,now->exp,now->last_value);
       now = now -> next;
     }
   }
