@@ -162,6 +162,10 @@ static int get_order(int type){
   case TK_AND:
     order = 1;
     break;
+  case TK_RP:
+  case TK_LP:
+    order = 6;
+    break;
   default:
     order = 5;
     break;
