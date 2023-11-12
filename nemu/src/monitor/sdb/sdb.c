@@ -105,8 +105,8 @@ static int cmd_x(char *args){
 
 static int cmd_p(char *args){
   bool su = 0;
-  int number = expr(args,&su);
-  if(su)printf("%d\n",number);
+  uint32_t number = expr(args,&su);
+  if(su)printf("%u\n",number);
   return 0;
 }
 
