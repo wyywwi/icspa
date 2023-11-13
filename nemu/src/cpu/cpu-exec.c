@@ -16,7 +16,7 @@
 #include <cpu/cpu.h>
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
-#include "/home/kkoapbd/Desktop/ics2023/nemu/src/monitor/sdb/sdb.h"
+
 #include <locale.h>
 
 /* The assembly code of instructions executed is only output to the screen
@@ -30,7 +30,7 @@ CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
-
+bool check_wp_diff(int *n);
 void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
