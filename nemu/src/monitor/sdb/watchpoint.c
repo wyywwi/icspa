@@ -20,7 +20,7 @@
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
-  char exp[65536];
+  char exp[65536];  
   uint32_t last_value;
   /* TODO: Add more members if necessary */
 
