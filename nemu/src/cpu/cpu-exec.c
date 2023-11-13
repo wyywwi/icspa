@@ -16,7 +16,6 @@
 #include <cpu/cpu.h>
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
-
 #include <locale.h>
 
 /* The assembly code of instructions executed is only output to the screen
