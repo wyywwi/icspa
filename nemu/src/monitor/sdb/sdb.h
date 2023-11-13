@@ -18,14 +18,7 @@
 
 #include <common.h>
 
-typedef struct watchpoint {
-  int NO;
-  struct watchpoint *next;
-  char exp[65536];
-  uint32_t last_value;
-  /* TODO: Add more members if necessary */
-
-} WP;
+typedef struct watchpoint WP;
 
 word_t expr(char *e, bool *success);
 void init_regex();
