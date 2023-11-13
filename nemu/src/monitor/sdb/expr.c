@@ -202,7 +202,7 @@ word_t eval(int p,int q){
       word_t number;
       bool success = true;
       number = isa_reg_str2val(tokens[p].str,&success);
-      if(!success) return 0;
+      if(!success) assert(0);
       return number;
     }
   }
