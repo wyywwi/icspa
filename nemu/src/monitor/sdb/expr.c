@@ -147,6 +147,10 @@ static int get_order(int type,int count){
   int order = 0;
   switch (type)
   {
+  case TK_REF:
+  case TK_NEG:
+    order = 5;
+    break;
   case TK_STAR:
   case TK_DIV:
     order = 4; 
@@ -163,7 +167,7 @@ static int get_order(int type,int count){
     order = 1;
     break;
   default:
-    order = 5;
+    order = 6;
     break;
   }
   return order + count*10;
@@ -175,17 +179,6 @@ word_t eval(int p,int q){
       printf("%s",tokens[i].str);
     }
     panic("Bad Expression p = %d,q = %d",p,q);
-  }
-  else if(q - p == 1){
-    if(tokens[p].type == TK_REF){
-      word_t addr = eval(q,q);
-      word_t value = paddr_read(addr,4);
-      return value;
-    }
-    if(tokens[p].type == TK_NEG){
-      word_t val = eval(q,q);
-      return (-val);
-    }
   }
   else if(p == q){
     if(tokens[p].type == TK_NUM){
@@ -227,6 +220,15 @@ word_t eval(int p,int q){
       }
     }
     if(op == p - 1)assert(0);
+    if(tokens[op].type == TK_REF){
+      word_t addr = eval(op,q);
+      word_t value = paddr_read(addr,4);
+      return value; 
+    }
+    if(tokens[op].type == TK_NEG){
+      word_t val = eval(op,q);
+      return (-val);
+    }
     uint32_t val1 = eval(p,op-1);
     uint32_t val2 = eval(op+1,q);
     switch (tokens[op].type)
