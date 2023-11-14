@@ -78,9 +78,10 @@ static unsigned int gen_rand_expr() {
       }
       else
       {
+        n = 0;
         int nlen = strlen(regsl[choose_1]);
-        snprintf(buf + place,nlen+1,"$%s",regsl[choose_1]);
-        place += (nlen +1 );
+        snprintf(buf + place,nlen+3,"$%s",regsl[choose_1]);
+        place += (nlen + 1);
         num_token++;
         break;
       }
