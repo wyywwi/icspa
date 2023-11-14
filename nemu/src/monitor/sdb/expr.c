@@ -192,7 +192,7 @@ word_t eval(int p,int q){
       return number;
     }
     else if(tokens[p].type == TK_REG){
-      word_t number;
+      word_t number = 0;
       bool success = true;
       number = isa_reg_str2val(tokens[p].str,&success);
       if(!success) assert(0);
