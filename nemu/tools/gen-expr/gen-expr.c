@@ -59,7 +59,7 @@ static int countDigits(uint32_t num) {
 
 static int num_token = 0;
 static unsigned int gen_rand_expr() {
-  if(num_token > 60000){
+  if(num_token > 10000){
     buf[place++] = '1';
     return 1;
   }
