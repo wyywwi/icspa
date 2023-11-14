@@ -222,8 +222,7 @@ word_t eval(int p,int q){
     if(op == p - 1)assert(0);
     if(tokens[op].type == TK_REF){
       uint32_t addr = eval(op+1,q);
-      uint32_t value = paddr_read(addr,4);
-      return value; 
+      return paddr_read(addr,4); 
     }
     if(tokens[op].type == TK_NEG){
       word_t val = eval(op+1,q);
