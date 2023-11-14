@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
 #else
   init_monitor(argc, argv);
 #endif
+  engine_start();
   int loop = 1000;
   if(argc > 1){
     sscanf(argv[1],"%d",&loop);
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
     if(result != n)panic("Error at %s and result is %u but need to be %u\n",buf,result,n);
   }
   /* Start engine. */
-  engine_start();
+  //engine_start();
 
   return is_exit_status_bad();
 }
