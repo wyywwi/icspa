@@ -21,3 +21,6 @@ submit:
 	STUID=$(STUID) STUNAME=$(STUNAME) bash -c "$$(curl -s http://why.ink:8080/static/submit.sh)"
 
 .PHONY: default submit
+
+count:
+	find nemu/ -name "*[.c|.h]" | xargs cat|wc -l

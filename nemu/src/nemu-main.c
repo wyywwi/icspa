@@ -19,6 +19,7 @@ void init_monitor(int, char *[]);
 void am_init_monitor();
 void engine_start();
 int is_exit_status_bad();
+word_t expr(char *,bool *);
 
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
@@ -27,9 +28,24 @@ int main(int argc, char *argv[]) {
 #else
   init_monitor(argc, argv);
 #endif
-
-  /* Start engine. */
   engine_start();
+  int loop = 1000;
+  if(argc > 1){
+    sscanf(argv[1],"%d",&loop);
+  }
+  FILE* is_open = fopen("/home/kkoapbd/Desktop/ics2023/nemu/tools/gen-expr/input","r");
+  if(is_open == NULL)panic("error for open");
+  for(int i = 0;i<loop;i++){
+    uint32_t n;
+    bool success;
+    char buf[65536];
+    int is_sca = fscanf(is_open,"%u%s",&n,buf);
+    if(!is_sca)break;
+    uint32_t result = expr(buf,&success);
+    if(result != n)panic("Error at %s and result is %u but need to be %u\n",buf,result,n);
+  }
+  /* Start engine. */
+  //engine_start();
 
   return is_exit_status_bad();
 }

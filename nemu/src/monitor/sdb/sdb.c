@@ -17,12 +17,10 @@
 #include <cpu/cpu.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <memory/paddr.h>
 #include "sdb.h"
 
 static int is_batch_mode = false;
-
-void init_regex();
-void init_wp_pool();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -52,7 +50,78 @@ static int cmd_q(char *args) {
   return -1;
 }
 
+
 static int cmd_help(char *args);
+
+static int cmd_step(char *args){
+  uint64_t step = 1;
+  if(args != NULL){
+    sscanf(args,"%ld",&step);
+  }
+  cpu_exec(step);
+  return 0;
+}
+
+static int cmd_info(char *args){
+  if(args == NULL){
+    return 0;
+  }
+  if(*args == 'r'){
+    isa_reg_display();
+  }
+  if(*args == 'w'){
+    print_wp();
+  }
+  return 0;
+}
+
+static int cmd_x(char *args){
+  int nlen = 1;
+  if(args == NULL){
+    return 0;
+  }
+  vaddr_t address_to_access;
+  bool su = true;
+  address_to_access = expr(args,&su);
+  if(!su)return -1;
+  //sscanf(args,"%d%x",&nlen,&address_to_access);
+  word_t now_access;
+  int count = nlen/4 + (nlen%4 != 0);
+  for(int i = 0 ; i < count; i++){
+    int access_place[4] = {0,1,2,3};
+    printf("0x%08x: ",address_to_access + i * 4 );
+    for(int j = 0 ; j < 4 ; j++){
+      if( i * 4 + j == nlen)break;
+      now_access = paddr_read(address_to_access + (i * 4 + access_place[j] ) * 2 , 2);
+      printf("%04x " , now_access);
+    }
+    printf("\n");
+  }
+  return 0;
+}
+
+static int cmd_p(char *args){
+  bool su = 0;
+  uint32_t number = expr(args,&su);
+  if(su)printf("%08x\n",number);
+  return 0;
+}
+
+static int cmd_w(char *exp){
+  WP *watch = new_wp(exp);
+  if(watch != NULL)return 0;
+  else return 1;
+}
+
+static int cmd_d(char *args){
+  if(args == NULL)return 1;
+  else{
+    int N = 33;
+    sscanf(args,"%d",&N);
+    delete_wp(N);
+    return 0;
+  }
+}
 
 static struct {
   const char *name;
@@ -62,7 +131,12 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si", "run for some steps", cmd_step},
+  { "info", "prinf info for regs or watchpoints", cmd_info},
+  { "x", "examine the address" , cmd_x},
+  { "w" ,"make a watchpoint" , cmd_w},
+  { "d" ,"delete a watchpoint" , cmd_d},
+  { "p", "print for exprision" , cmd_p},
   /* TODO: Add more commands */
 
 };
