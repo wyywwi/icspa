@@ -103,7 +103,7 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
   bool su = 0;
   uint32_t number = expr(args,&su);
-  if(su)printf("%d\n",number);
+  if(su)printf("%08x\n",number);
   return 0;
 }
 
