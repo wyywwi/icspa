@@ -82,9 +82,9 @@ static int cmd_x(char *args){
   }
   vaddr_t address_to_access;
   bool su = true;
-  address_to_access = expr(args,&su);
   if(!su)return -1;
-  //sscanf(args,"%d%x",&nlen,&address_to_access);
+  sscanf(args,"%d%s",&nlen,args);
+  address_to_access = expr(args,&su);
   word_t now_access;
   int count = nlen/4 + (nlen%4 != 0);
   for(int i = 0 ; i < count; i++){
@@ -103,7 +103,7 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
   bool su = 0;
   uint32_t number = expr(args,&su);
-  if(su)printf("%08x\n",number);
+  if(su)printf("%d\n",number);
   return 0;
 }
 
