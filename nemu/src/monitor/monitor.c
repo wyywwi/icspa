@@ -66,6 +66,7 @@ static long load_img() {
 
   fclose(fp);
   return size;
+  
 }
 
 static int parse_args(int argc, char *argv[]) {
