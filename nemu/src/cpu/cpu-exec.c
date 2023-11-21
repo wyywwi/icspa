@@ -114,7 +114,7 @@ static void statistic() {
 void assert_fail_msg() {
   isa_reg_display();
   for(int i = 0;i<16;i++){
-    printf("%s",ring_buf[i]);
+    printf("%s\n",ring_buf[i]);
   }
   statistic();
 }
