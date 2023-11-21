@@ -91,8 +91,8 @@ static void execute(uint64_t n) {
     ring_buf[ring_place][1] = '-';
     ring_buf[ring_place][2] = '>';
     ring_buf[last_place][0] = ' ';
-    ring_buf[last_place][0] = ' ';
-    ring_buf[last_place][0] = ' ';
+    ring_buf[last_place][1] = ' ';
+    ring_buf[last_place][2] = ' ';
     ring_place = (ring_place + 1)%16;
     g_nr_guest_inst ++;
 #endif
