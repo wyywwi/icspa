@@ -16,6 +16,7 @@ config PC_RESET_OFFSET
 
 config MTARCE
   bool "Open Memory Tarce"
+  default n
 
 choice
   prompt "Physical memory definition"
