@@ -1,8 +1,8 @@
 #include <am.h>
 #include <nemu.h>
 void __am_timer_init() {
-  outl(0xa0000048,0);
-  outl(0xa0000048 +4,0);
+  //outl(0xa0000048,0);
+  //outl(0xa0000048 +4,0);
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
