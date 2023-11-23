@@ -40,6 +40,7 @@ extern char _pmem_start;
 #define PMEM_END  ((uintptr_t)&_pmem_start + PMEM_SIZE)
 #define NEMU_PADDR_SPACE \
   RANGE(&_pmem_start, PMEM_END), \
+  RANGE(RTC_ADDR,RTC_ADDR+4),\
   RANGE(FB_ADDR, FB_ADDR + 0x200000), \
   RANGE(MMIO_BASE, MMIO_BASE + 0x1000) /* serial, rtc, screen, keyboard */
 
