@@ -6,11 +6,11 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  char out[65536];
+  char out[INT32_MAX/2];
   int ret;
 	va_list ap;
 	va_start(ap, fmt);
-	ret = snprintf(out,65536,fmt,ap);
+	ret = snprintf(out,INT32_MAX/2,fmt,ap);
 	va_end(ap);
   int i = 0;
   while(*(out + i) != '\0'){
