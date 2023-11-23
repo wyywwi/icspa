@@ -29,8 +29,10 @@ CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
+#ifdef CONFIG_ITRACE
 static char ring_buf[16][128] = {};
 static int ring_place = 0;
+#endif
 bool check_wp_diff(int *n);
 void device_update();
 
@@ -113,9 +115,11 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
+  #ifdef CONFIG_ITRACE
   for(int i = 0;i<16;i++){
     printf("%s\n",ring_buf[i]);
   }
+  #endif
   statistic();
 }
 
