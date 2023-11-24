@@ -35,6 +35,9 @@ int printf(const char *fmt, ...) {
                     str_ptr++;
                     output_count++;
                 }
+            } else if (*format_ptr == 'c'){
+                char c = va_arg(args,int);
+                putch(c);
             }
         } else {
             putch(*format_ptr);
