@@ -37,7 +37,7 @@ void *malloc(size_t size) {
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
   if(addr + size < heap.start-heap.end){
     addr += size;
-    return heap.start + addr;
+    return heap.start + addr - size;
   }
 #endif
   return NULL;
