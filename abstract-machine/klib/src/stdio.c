@@ -9,10 +9,8 @@ int printf(const char *fmt, ...) {
   char buffer[1024];
   va_list arg;
   va_start(arg, fmt);
-
   int done = vsprintf(buffer, fmt, arg);  // 将格式化的内容(字符串)保存在buffer中
   putstr(buffer);
-
   va_end(arg);
   return done;
 }
@@ -76,6 +74,11 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           count1++;
           arg++;
         }
+      }
+      else if(*(fmt + count2 + 1) == 'c'){
+        int arg = va_arg(ap,int);
+        *(out + count1) = arg;
+        count1++;
       }
       count2 += 2;
     }
