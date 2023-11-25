@@ -6,49 +6,15 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  va_list args;
-    va_start(args, fmt);
+  char buffer[1024];
+  va_list arg;
+  va_start(arg, fmt);
 
-    int output_count = 0;
-    const char* format_ptr = fmt;
+  int done = vsprintf(buffer, fmt, arg);  // 将格式化的内容(字符串)保存在buffer中
+  putstr(buffer);
 
-    while (*format_ptr != '\0') {
-        if (*format_ptr == '%') {
-            format_ptr++;
-            if (*format_ptr == 'd') {
-                // Handle %d format specifier
-                int num = va_arg(args, int);
-                char str[20];
-                sprintf(str, "%d", num);
-                char* str_ptr = str;
-                while (*str_ptr != '\0') {
-                    putch(*str_ptr);
-                    str_ptr++;
-                    output_count++;
-                }
-            } else if (*format_ptr == 's') {
-                // Handle %s format specifier
-                char* str = va_arg(args, char*);
-                char* str_ptr = str;
-                while (*str_ptr != '\0') {
-                    putch(*str_ptr);
-                    str_ptr++;
-                    output_count++;
-                }
-            } else if (*format_ptr == 'c'){
-                char c = va_arg(args,int);
-                putch(c);
-            }
-        } else {
-            putch(*format_ptr);
-            output_count++;
-        }
-
-        format_ptr++;
-    }
-
-    va_end(args);
-    return output_count;
+  va_end(arg);
+  return done;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
