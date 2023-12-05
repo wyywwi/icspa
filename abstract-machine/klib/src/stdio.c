@@ -16,7 +16,7 @@ int printf(const char *fmt, ...) {
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  return vsnprintf(out, INT32_MAX, fmt, ap);
+  return vsnprintf(out,1024, fmt, ap);
 }
 
 int sprintf(char *out, const char *fmt, ...) {
