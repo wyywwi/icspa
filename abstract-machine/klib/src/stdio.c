@@ -12,7 +12,7 @@ int printf(const char *fmt, ...) {
   // int done = vsprintf(buffer, fmt, arg);  // 将格式化的内容(字符串)保存在buffer中
   // putstr(buffer);
   // va_end(arg);void printf(char *format,...)
-	char buffer[1024];
+	char buffer[128];
 	int temp = 0;
 	va_list arg;
 
