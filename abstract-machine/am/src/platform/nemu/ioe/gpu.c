@@ -5,8 +5,8 @@
 
 void __am_gpu_init() {
   int i;
-  int w = inw(VGACTL_ADDR);
-  int h = inw(VGACTL_ADDR + 2);
+  int w = inw(VGACTL_ADDR + 2);
+  int h = inw(VGACTL_ADDR);
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for(i = 0;i<w*h;i++)fb[i] = i;
   outl(SYNC_ADDR,1);
@@ -15,7 +15,7 @@ void __am_gpu_init() {
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
-    .width = inw(VGACTL_ADDR), .height = inw(VGACTL_ADDR + 2),
+    .width = inw(VGACTL_ADDR + 2), .height = inw(VGACTL_ADDR),
     .vmemsz = 0
   };
 }
