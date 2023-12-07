@@ -19,7 +19,6 @@ void init_monitor(int, char *[]);
 void am_init_monitor();
 void engine_start();
 int is_exit_status_bad();
-word_t expr(char *,bool *);
 
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */

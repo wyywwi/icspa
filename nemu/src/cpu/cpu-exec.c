@@ -33,6 +33,10 @@ static bool g_print_step = false;
 static char ring_buf[16][128] = {};
 static int ring_place = 0;
 #endif
+#ifdef CONFIG_FTRACE
+uint32_t func_addr[2][128];
+char func_name[128][128];
+#endif
 bool check_wp_diff(int *n);
 void device_update();
 
