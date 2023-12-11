@@ -74,7 +74,7 @@ static long load_img() {
 }
 
 void init_elf(const char *elf_file){
-
+  
 }
 
 static int parse_args(int argc, char *argv[]) {
